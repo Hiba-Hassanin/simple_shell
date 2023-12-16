@@ -1,23 +1,26 @@
 #include "shell.h"
 
 /**
- * main - entry point
+ * main - Entry point of the shell program
  *
- * Return - always 0
-*/
-
+ * Return: Always 0
+ */
 int main(void)
 {
-	char command[MAX_INPUT_LENGTH];
+	char command[MAX_COMMAND_LENGTH];
 
 	while (1)
 	{
-		display_prompt();
+		printf("simple_shell$ ");
+		fgets(command, sizeof(command), stdin);
+		command[strcspn(command, "\n")] = '\0';
 
-		if (!read_command(command))
+		if (strcmp(command, "exit") == 0)
 			break;
-
-		execute_command(command);
+		else if (strcmp(command, "env") == 0)
+			system("env");
+		else
+			execute_command(command);
 	}
 
 	return (0);
